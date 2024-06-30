@@ -15,7 +15,9 @@ class ProdutoRepository implements IprodutoRepository {
 
   @override
   Future<List<ProdutoModel>> getProdutos() async {
-    final response = await client.get(url: 'https://dummyjson.com/products');
+    final response = await client.get(
+      url: 'https://dummyjson.com/products',
+    );
 
     if (response.statusCode == 200) {
       final List<ProdutoModel> produtos = [];
@@ -26,9 +28,10 @@ class ProdutoRepository implements IprodutoRepository {
         final ProdutoModel produto = ProdutoModel.fromMap(item);
         produtos.add(produto);
       }).toList();
+
       return produtos;
     } else if (response.statusCode == 404) {
-      throw NotFoundExceptions(message: 'deu ruim');
+      throw NotFoundException(message: 'deu ruim');
     } else {
       throw Exception('Não foi possivel carregar os produtos');
     }

@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:api_consumer/app/data/http/exceptions.dart';
 import 'package:api_consumer/app/data/models/produto_model.dart';
 import 'package:api_consumer/app/data/repositories/produto_repository.dart';
@@ -14,7 +11,7 @@ class ProdutoStore {
   final ValueNotifier<List<ProdutoModel>> state =
       ValueNotifier<List<ProdutoModel>>([]);
 
-  final ValueNotifier<String> error = ValueNotifier<String>('');
+  final ValueNotifier<String> erro = ValueNotifier<String>('');
 
   ProdutoStore({required this.repository});
 
@@ -24,10 +21,10 @@ class ProdutoStore {
     try {
       final result = await repository.getProdutos();
       state.value = result;
-    } on NotFoundExceptions catch (e) {
-      error.value = e.message;
+    } on NotFoundException catch (e) {
+      erro.value = e.message;
     } catch (e) {
-      error.value = e.toString();
+      erro.value = e.toString();
     }
     isLoading.value = false;
   }

@@ -8,6 +8,6 @@ class HttpClient implements IhttpClient {
   final client = http.Client();
   @override
   Future get({required String url}) async {
-    client.get(Uri.parse(url));
+    return client.get(Uri.parse(url));
   }
 }
